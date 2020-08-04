@@ -22,7 +22,7 @@ GadgetReader_t::GadgetReader_t(int snapshot_id, Cosmology_t& cosmology): Snapsho
   RealTypeSize=0;
   
   LoadGadgetHeader();
-  Cosmology.Set(Header.ScaleFactor, Header.OmegaM0, Header.OmegaLambda0);  
+  Cosmology.Set(Header.ScaleFactor, Header.OmegaM0, Header.OmegaLambda0);
   Cosmology.ParticleMass=Header.mass[TypeDM];//this may be non-informative for non-confirming header
   if(Cosmology.ParticleMass==0) 
     cerr<<"WARNING: particle mass=0 in snapshot header. May need to read mass block to get the correct mass.\n";
@@ -191,6 +191,7 @@ void GadgetReader_t::Load()
   for(int iFile=0; iFile<Header.num_files; iFile++)
 	ReadGadgetFile(iFile);
   
+  Header.mass[TypeDM]=Header.OmegaM0*3.*PhysicalConst::H0*PhysicalConst::H0/8./3.1415926/PhysicalConst::G*Header.BoxSize*Header.BoxSize*Header.BoxSize/Header.npart[TypeDM];//particle mass in units of 10^10Msun/h
   Cosmology.ParticleMass=Header.mass[TypeDM];//set after ReadGadgetFile() to fix non-confirming header
   
   cout<<" ( "<<Header.num_files<<" total files ) : "<<Particles.size()<<" particles loaded."<<endl;

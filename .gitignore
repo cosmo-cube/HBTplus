@@ -1,0 +1,9 @@
+snapshot*
+group*
+subhaloes*
+.vscode*
+*.conf
+*.o
+
+FoF
+HBT

@@ -9,6 +9,8 @@ include $(HBTDIR)/Makefile.inc
 
 $(EXE): $(OBJS_COMM)
 
+HBT: CXXFLAGS+=-DHBT_INT8 
+
 HBT.apostle HBT.apostle_thermal: CXXFLAGS+=-DHBT_INT8 -DUNSIGNED_LONG_ID_OUTPUT
 HBT.apostle_thermal: CXXFLAGS+=-DUNBIND_WITH_THERMAL_ENERGY
 
@@ -19,7 +21,7 @@ HBT.nostrip: CXXFLAGS+=-DNO_STRIPPING -DHBT_INT8 #keep tracking and do not remov
 $(EXE_HBT): HBT.o
 	$(CXX) $^ $(LDFLAGS) $(LDLIBS) -o $@
 
-FoF.ll: CXXFLAGS+=-DFOF_METHOD=2
+FoF: CXXFLAGS+=-DFOF_METHOD=2 -DHBT_INT8
 $(EXE_FOF): OMPFLAG=
 $(EXE_FOF): CXXFLAGS+=-DDM_ONLY -DHBT_INT8
 # $(EXE_FOF): FoF.o
